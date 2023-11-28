@@ -47,8 +47,10 @@ def initialize_parameters(default_model="regress_default_model.txt"):
 
 def run(params):
 
-    x_train, y_train, x_val, y_val = st.load_data(params)
-
+    _x_train, y_train, _x_val, y_val = st.load_data(params)
+    # given the smile and the float, tokenize the smiles
+    x_train, x_val = av.tokenize(_x_train, _x_val)
+    
     model = st.transformer_model(params)
 
     kerasDefaults = candle.keras_default_config()
@@ -81,16 +83,23 @@ def run(params):
         save_best_only=True,
     )
     csv_logger = CSVLogger("smile_regress.training.log")
-    reduce_lr = ReduceLROnPlateau(
-        monitor="val_loss",
-        factor=0.75,
-        patience=20,
-        verbose=1,
-        mode="auto",
-        epsilon=0.0001,
-        cooldown=3,
-        min_lr=0.000000001,
-    )
+    
+    # reduce_lr = CyclicalLearn(
+    #
+    #
+    #)
+
+    #reduce_lr = ReduceLROnPlateau(
+    #    monitor="val_loss",
+    #    factor=0.75,
+    #    patience=20,
+    #    verbose=1,
+    #    mode="auto",
+    #    epsilon=0.0001,
+    #    cooldown=3,
+    #    min_lr=0.000000001,
+    #)
+
     early_stop = EarlyStopping(monitor="val_loss", patience=100, verbose=1, mode="auto")
 
     history = model.fit(
