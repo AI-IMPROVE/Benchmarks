@@ -15,6 +15,7 @@ file_path = os.path.dirname(os.path.realpath(__file__))
 import candle
 import smiles_transformer as st
 import tensorflow.config.experimental
+import tokenize
 
 gpus = tensorflow.config.experimental.list_physical_devices("GPU")
 try:
@@ -50,7 +51,7 @@ def run(params):
     _x_train, y_train, _x_val, y_val = st.load_data(params)
 
     if params["tokenizer"] == "spe":
-        x_train, x_val = av.tokenize(_x_train, _x_val)
+        x_train, x_val = tokenize.tokenize_data(_x_train, _x_val)
     else:
         x_train =_x_train
         y_train = _x_val
