@@ -51,7 +51,7 @@ def run(params):
     _x_train, y_train, _x_val, y_val = st.load_data(params)
 
     if params["tokenizer"] == "spe":
-        x_train, x_val = tokenize.tokenize_data(_x_train, _x_val)
+        x_train, x_val = tokenizers.tokenize_data(_x_train, _x_val)
     else:
         x_train =_x_train
         y_train = _x_val
