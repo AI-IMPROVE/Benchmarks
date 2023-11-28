@@ -166,7 +166,7 @@ def transformer_model(params):
     out_layer = params["out_layer"]  # 2 for class, 1 for regress
     out_act = params["out_activation"]  # 'softmax' for class, 'relu' for regress
 
-    x = layers.Reshape((1, 32000), input_shape=(250, 128,))(
+    x = layers.Reshape((1, maxlen * embed_dim), input_shape=(250, 128,))(
         x
     )  # reshaping increases parameters but improves accuracy a lot
     x = layers.Dropout(0.1)(x)
