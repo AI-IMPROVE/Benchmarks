@@ -59,6 +59,9 @@ class SMILES_SPE_Tokenizer(PreTrainedTokenizer):
         mask_token="[MASK]",
         **kwargs
     ):
+
+        self.vocab = load_vocab(vocab_file)
+
         super().__init__(
             unk_token=unk_token,
             sep_token=sep_token,
@@ -76,7 +79,6 @@ class SMILES_SPE_Tokenizer(PreTrainedTokenizer):
             raise ValueError(
                 "Can't find a SPE vocabulary file at path '{}'.".format(spe_file)
             )
-        self.vocab = load_vocab(vocab_file)
         self.spe_vocab = codecs.open(spe_file)
         self.ids_to_tokens = collections.OrderedDict(
             [(ids, tok) for tok, ids in self.vocab.items()]
