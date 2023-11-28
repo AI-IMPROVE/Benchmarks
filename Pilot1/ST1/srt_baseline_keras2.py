@@ -48,8 +48,12 @@ def initialize_parameters(default_model="regress_default_model.txt"):
 def run(params):
 
     _x_train, y_train, _x_val, y_val = st.load_data(params)
-    # given the smile and the float, tokenize the smiles
-    x_train, x_val = av.tokenize(_x_train, _x_val)
+
+    if params["tokenizer"] == "spe":
+        x_train, x_val = av.tokenize(_x_train, _x_val)
+    else:
+        x_train =_x_train
+        y_train = _x_val
     
     model = st.transformer_model(params)
 
