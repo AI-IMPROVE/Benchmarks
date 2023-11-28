@@ -25,6 +25,11 @@ additional_definitions = [
     {"name": "out_layer", "type": int, "help": "Size of output layer"},
     {"name": "transformer_depth", "type": int, "help": "Number of transformer layers"},
     {"name": "vocab_size", "type": int, "help": "Vocabulary size"},
+    {
+        "name": "tokenizer",
+        "help": "Tokenizer to use, if None, simple character based encoding is used",
+        "default": None
+    },
 ]
 
 required = []
