@@ -19,3 +19,4 @@ batch_size = 32
 loss = 'mean_squared_error'
 optimizer = 'adam'
 learning_rate = 0.001
+tokenizer = 'spe'

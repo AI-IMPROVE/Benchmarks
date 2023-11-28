@@ -48,13 +48,14 @@ def initialize_parameters(default_model="regress_default_model.txt"):
 
 def run(params):
 
-    _x_train, y_train, _x_val, y_val = st.load_data(params)
+    x_train, y_train, x_val, y_val = st.load_data(params)
+    #print(_x_train)
 
-    if params["tokenizer"] == "spe":
-        x_train, x_val = tokenizers_archit.tokenize_data(_x_train, _x_val)
-    else:
-        x_train =_x_train
-        y_train = _x_val
+    #if params["tokenizer"] == "spe":
+    #    x_train, x_val = tokenizers_archit.tokenize_data(_x_train, _x_val)
+    #else:
+    #    x_train =_x_train
+    #    y_train = _x_val
     
     model = st.transformer_model(params)
 
@@ -94,16 +95,16 @@ def run(params):
     #
     #)
 
-    #reduce_lr = ReduceLROnPlateau(
-    #    monitor="val_loss",
-    #    factor=0.75,
-    #    patience=20,
-    #    verbose=1,
-    #    mode="auto",
-    #    epsilon=0.0001,
-    #    cooldown=3,
-    #    min_lr=0.000000001,
-    #)
+    reduce_lr = ReduceLROnPlateau(
+        monitor="val_loss",
+        factor=0.75,
+        patience=20,
+        verbose=1,
+        mode="auto",
+        epsilon=0.0001,
+        cooldown=3,
+        min_lr=0.000000001,
+    )
 
     early_stop = EarlyStopping(monitor="val_loss", patience=100, verbose=1, mode="auto")
 

@@ -12,6 +12,7 @@ from tensorflow.keras.preprocessing import sequence, text
 file_path = os.path.dirname(os.path.realpath(__file__))
 
 import candle
+import tokenizers_archit
 
 additional_definitions = [
     {"name": "embed_dim", "type": int, "help": "Embedding dimension for each token"},
@@ -126,14 +127,17 @@ def load_data(params):
     y_train = data_train["type"].values.reshape(-1, 1) * 1.0
     y_val = data_vali["type"].values.reshape(-1, 1) * 1.0
 
-    tokenizer = text.Tokenizer(num_words=vocab_size)
-    tokenizer.fit_on_texts(data_train["smiles"])
+    if params["tokenizer"] == "spe":
+        x_train, x_val = tokenizers_archit.tokenize_data(data_train["smiles"], data_vali["smiles"], maxlen)
+    else:
+        tokenizer = text.Tokenizer(num_words=vocab_size)
+        tokenizer.fit_on_texts(data_train["smiles"])
 
-    x_train = prep_text(data_train["smiles"], tokenizer, maxlen)
-    x_val = prep_text(data_vali["smiles"], tokenizer, maxlen)
+        x_train = prep_text(data_train["smiles"], tokenizer, maxlen)
+        x_val = prep_text(data_vali["smiles"], tokenizer, maxlen)
 
-    print(x_train.shape)
-    print(y_train.shape)
+        print(x_train.shape)
+        print(y_train.shape)
 
     return x_train, y_train, x_val, y_val
 

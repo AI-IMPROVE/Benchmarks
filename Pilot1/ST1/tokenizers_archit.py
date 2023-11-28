@@ -1,3 +1,4 @@
+import numpy as np
 from itertools import chain, islice, repeat
 import codecs
 import collections
@@ -6,7 +7,7 @@ import os
 import re
 import unicodedata
 from typing import List, Optional
-
+from tqdm import tqdm
 from SmilesPE.tokenizer import SPE_Tokenizer
 from transformers import PreTrainedTokenizer
 
@@ -227,16 +228,16 @@ def pad_infinite(iterable, padding=None):
 def pad(iterable, size, padding=None):
     return islice(pad_infinite(iterable, padding), size)
 
-def tokenize_data(_x_train, _x_val):
+def tokenize_data(_x_train, _x_val, maxlen):
     vocab_file = 'VocabFiles_spe/vocab_spe.txt'
     spe_file = 'VocabFiles_spe/SPE_ChEMBL.txt'
     tokenizer = SMILES_SPE_Tokenizer(vocab_file=vocab_file, spe_file=spe_file)
     
     x_train = np.array(
-        [list(pad(tokenizer(smi)["input_ids"], maxlen, 0)) for smi in _x_train]
+        [list(pad(tokenizer(smi)["input_ids"], maxlen, 0)) for smi in tqdm(_x_train)]
     )
     
     x_val = np.array(
-        [list(pad(tokenizer(smi)["input_ids"], maxlen, 0)) for smi in _x_val]
+        [list(pad(tokenizer(smi)["input_ids"], maxlen, 0)) for smi in tqdm(_x_val)]
     )
     return (x_train, x_val)
