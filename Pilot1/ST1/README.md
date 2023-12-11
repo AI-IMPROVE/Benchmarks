@@ -10,7 +10,7 @@ The example classification problem takes as input SMILE strings and trains a mod
 
 For the CANDLE versions, all the relevant arguments are contained in the respective default model files. All variables can be overwritten from the command line. The datasets will be automatically downloaded and stored in the `../../Data/Pilot1 directory`. The respective default model files and commands to invoke the classifier and regressor are:
 
-Additional developments to ST1 are three implementations designed for performing regression on SMILES to predict binding affinity to macromolecular targets.
+<!Additional developments to ST1 are three implementations designed for performing regression on SMILES to predict binding affinity to macromolecular targets.
 These implementations are:
 
 (1) ST1 original: The original ST1 code initially trained to predict molecular weight now trained on binding affinity measurements.
@@ -18,7 +18,7 @@ These implementations are:
 (2) ST1-horovod: ST1 original with additional functionality allowing for distributed training with horovod.
 
 (3) ST1 with SPE tokenizer: ST1 model trained on binding affinity measurements that featurizes SMILES strings using a special byte-pair encoder known as SMILES-pair encoder (https://doi.org/10.1021/acs.jcim.0c01127). We show this implementation improves accuracy of the model and reduces the overall model size (thus improving inference speed).
-
+>
 ```
 class_default_model.txt
 python sct_baseline_keras2.py
