@@ -31,6 +31,23 @@ regress_default_model.txt
 python srt_baseline_keras2.py
 ```
 
+## Implementing the SMILES Pair Encoder tokenization method:
+The SMILES Pair Encoder is an advanced tokenization scheme, which operates similarly to a byte-pair encoder and allows the model to better learn important chemical motifs.
+While using this tokenizer, we showed approximately a 0.05 increase in validation-r2 when training a docking surrogate model.
+
+To implement this:
+1. Install SmilesPE and transformers modules:
+```
+pip install SmilesPE
+pip install transformers
+```
+2. Modify: ```regress_default_model.txt```with ``` tokenizer='spe'```.
+
+3. Then call:
+```
+python srt_baseline_keras2.py
+```
+
 ## Running the original versions
 
 The original code demonstrating a simple transformer regressor and a simple transformer classifier are available as
